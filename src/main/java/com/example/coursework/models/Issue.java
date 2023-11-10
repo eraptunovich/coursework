@@ -1,5 +1,11 @@
 package com.example.coursework.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+
+@Data
+@AllArgsConstructor
 public class Issue {
     private int issueId;
     private String title;
