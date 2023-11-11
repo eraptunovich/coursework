@@ -1,29 +1,79 @@
 package com.example.coursework.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-
-@Data
-@AllArgsConstructor
+@Entity
+@Table(name = "issues")
 public class Issue {
-    private int issueId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "IssueID")
+    private Long issueId;
+
+    @Column(name = "Title")
     private String title;
+
+    @Column(name = "Description", columnDefinition = "text")
     private String description;
+
+    @Column(name = "CategoryID")
     private int categoryId;
+
+    @Column(name = "ProductVersion")
     private String productVersion;
+
+    @Column(name = "Priority")
     private String priority;
+
+    @Column(name = "Status")
     private String status;
+    @Column(name = "CreatedDate")
     private String createdDate;
+    @Column(name = "ClosedDate")
     private String ClosedDate;
+    @Column(name = "Deadline")
     private String deadlineDate;
+    @Column(name = "AssignedDeveloper")
     private int assignedDeveloper;
+    @Column(name = "AssignedTester")
     private int assignedTester;
 
     public Issue() {
     }
 
-    public int getIssueId() {
+    public Issue(Long issueId, String title, String description, int categoryId, String productVersion, String priority, String status, String createdDate, String ClosedDate, String deadlineDate, int assignedDeveloper, int assignedTester) {
+        this.issueId = issueId;
+        this.title = title;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.productVersion = productVersion;
+        this.priority = priority;
+        this.status = status;
+        this.createdDate = createdDate;
+        this.ClosedDate = ClosedDate;
+        this.deadlineDate = deadlineDate;
+        this.assignedDeveloper = assignedDeveloper;
+        this.assignedTester = assignedTester;
+    }
+
+    public String getClosedDate() {
+        return this.ClosedDate;
+    }
+
+    public void setClosedDate(String ClosedDate) {
+        this.ClosedDate = ClosedDate;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Issue;
+    }
+
+    public Long getIssueId() {
         return this.issueId;
     }
 
@@ -55,10 +105,6 @@ public class Issue {
         return this.createdDate;
     }
 
-    public String getClosedDate() {
-        return this.ClosedDate;
-    }
-
     public String getDeadlineDate() {
         return this.deadlineDate;
     }
@@ -71,7 +117,7 @@ public class Issue {
         return this.assignedTester;
     }
 
-    public void setIssueId(int issueId) {
+    public void setIssueId(Long issueId) {
         this.issueId = issueId;
     }
 
@@ -103,10 +149,6 @@ public class Issue {
         this.createdDate = createdDate;
     }
 
-    public void setClosedDate(String ClosedDate) {
-        this.ClosedDate = ClosedDate;
-    }
-
     public void setDeadlineDate(String deadlineDate) {
         this.deadlineDate = deadlineDate;
     }
@@ -124,7 +166,9 @@ public class Issue {
         if (!(o instanceof Issue)) return false;
         final Issue other = (Issue) o;
         if (!other.canEqual((Object) this)) return false;
-        if (this.getIssueId() != other.getIssueId()) return false;
+        final Object this$issueId = this.getIssueId();
+        final Object other$issueId = other.getIssueId();
+        if (this$issueId == null ? other$issueId != null : !this$issueId.equals(other$issueId)) return false;
         final Object this$title = this.getTitle();
         final Object other$title = other.getTitle();
         if (this$title == null ? other$title != null : !this$title.equals(other$title)) return false;
@@ -160,14 +204,11 @@ public class Issue {
         return true;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof Issue;
-    }
-
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        result = result * PRIME + this.getIssueId();
+        final Object $issueId = this.getIssueId();
+        result = result * PRIME + ($issueId == null ? 43 : $issueId.hashCode());
         final Object $title = this.getTitle();
         result = result * PRIME + ($title == null ? 43 : $title.hashCode());
         final Object $description = this.getDescription();
