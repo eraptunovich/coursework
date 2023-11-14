@@ -6,9 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "issues")
+@Data
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,9 +27,9 @@ public class Issue {
     private String description;
 
     @Column(name = "CategoryID")
-    private int categoryId;
+    private Integer categoryId;
 
-    @Column(name = "ProductVersion")
+    @Column(name="Productversion")
     private String productVersion;
 
     @Column(name = "Priority")
@@ -32,21 +37,24 @@ public class Issue {
 
     @Column(name = "Status")
     private String status;
-    @Column(name = "CreatedDate")
-    private String createdDate;
-    @Column(name = "ClosedDate")
-    private String ClosedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name="createddate")
+    private Date createdDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name="closeddate")
+    private Date ClosedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "Deadline")
-    private String deadlineDate;
-    @Column(name = "AssignedDeveloper")
-    private int assignedDeveloper;
-    @Column(name = "AssignedTester")
-    private int assignedTester;
+    private Date deadlineDate;
+    @Column(name = "Assigneddeveloper")
+    private Integer assignedDeveloper;
+    @Column(name = "Assignedtester")
+    private Integer assignedTester;
 
     public Issue() {
     }
 
-    public Issue(Long issueId, String title, String description, int categoryId, String productVersion, String priority, String status, String createdDate, String ClosedDate, String deadlineDate, int assignedDeveloper, int assignedTester) {
+    public Issue(Long issueId, String title, String description, int categoryId, String productVersion, String priority, String status, Date createdDate, Date ClosedDate, Date deadlineDate, int assignedDeveloper, int assignedTester) {
         this.issueId = issueId;
         this.title = title;
         this.description = description;
@@ -61,11 +69,11 @@ public class Issue {
         this.assignedTester = assignedTester;
     }
 
-    public String getClosedDate() {
+    public Date getClosedDate() {
         return this.ClosedDate;
     }
 
-    public void setClosedDate(String ClosedDate) {
+    public void setClosedDate(Date ClosedDate) {
         this.ClosedDate = ClosedDate;
     }
 
@@ -101,22 +109,21 @@ public class Issue {
         return this.status;
     }
 
-    public String getCreatedDate() {
+    public Date getCreatedDate() {
         return this.createdDate;
     }
 
-    public String getDeadlineDate() {
+    public Date getDeadlineDate() {
         return this.deadlineDate;
     }
 
-    public int getAssignedDeveloper() {
-        return this.assignedDeveloper;
+    public Integer getAssignedDeveloper() {
+        return assignedDeveloper != null ? assignedDeveloper : null;
     }
 
-    public int getAssignedTester() {
-        return this.assignedTester;
+    public Integer getAssignedTester() {
+        return assignedTester != null ? assignedTester : null;
     }
-
     public void setIssueId(Long issueId) {
         this.issueId = issueId;
     }
@@ -145,11 +152,11 @@ public class Issue {
         this.status = status;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public void setDeadlineDate(String deadlineDate) {
+    public void setDeadlineDate(Date deadlineDate) {
         this.deadlineDate = deadlineDate;
     }
 

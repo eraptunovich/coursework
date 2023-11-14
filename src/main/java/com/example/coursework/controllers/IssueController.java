@@ -14,21 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class IssueController {
     private final IssueService issueService;
+
+
     @GetMapping("/") //по данному гет-запросу будет вызываться данная функция
     public String issues(@RequestParam(name="title", required=false) String title, Model model){
-        model.addAttribute("issue", issueService.listIssues(title));
+        model.addAttribute("issues", issueService.listIssues(title));
         return "issues"; //название представления
     }
 
     @GetMapping("/issue/{id}")
     public String IssueInfo(@PathVariable Long id, Model model){
-        model.addAttribute("issue", issueService.getIssueById(id));
+        Issue issue = issueService.getIssueById(id);
+        model.addAttribute("issue", issue);
         return "issue-info";
     }
 
     @PostMapping("/issue/create")
     public String createIssue(Issue issue){
         issueService.saveIssue(issue);
+        return "redirect:/";
+    }
+
+    @PostMapping("/issue/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        issueService.deleteIssue(id);
         return "redirect:/";
     }
 
