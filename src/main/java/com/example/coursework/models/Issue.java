@@ -1,15 +1,24 @@
 package com.example.coursework.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "issues")
@@ -39,7 +48,7 @@ public class Issue {
     private String status;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="createddate")
-    private Date createdDate;
+    private LocalDateTime createdDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="closeddate")
     private Date ClosedDate;
@@ -51,10 +60,19 @@ public class Issue {
     @Column(name = "Assignedtester")
     private Integer assignedTester;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            mappedBy = "issue")
+    private List<IssueAttachments> attachments = new ArrayList<>();
+    private Long previewImageId;
+
+    @PrePersist
+    private void init(){
+        createdDate = LocalDateTime.now();
+    }
     public Issue() {
     }
 
-    public Issue(Long issueId, String title, String description, int categoryId, String productVersion, String priority, String status, Date createdDate, Date ClosedDate, Date deadlineDate, int assignedDeveloper, int assignedTester) {
+    public Issue(Long issueId, String title, String description, int categoryId, String productVersion, String priority, String status, LocalDateTime createdDate, Date ClosedDate, Date deadlineDate, int assignedDeveloper, int assignedTester) {
         this.issueId = issueId;
         this.title = title;
         this.description = description;
@@ -109,7 +127,7 @@ public class Issue {
         return this.status;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return this.createdDate;
     }
 
@@ -152,7 +170,7 @@ public class Issue {
         this.status = status;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 

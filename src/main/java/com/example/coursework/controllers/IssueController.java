@@ -17,9 +17,15 @@ public class IssueController {
 
 
     @GetMapping("/") //по данному гет-запросу будет вызываться данная функция
-    public String issues(@RequestParam(name="title", required=false) String title, Model model){
-        model.addAttribute("issues", issueService.listIssues(title));
+    public String issues(Model model){
+        model.addAttribute("issues", issueService.listIssues());
         return "issues"; //название представления
+    }
+
+    @GetMapping("/search/{id}")
+    public String issueSearch(@RequestParam(name="title", required=true) String title, Model model){
+        model.addAttribute("issues", issueService.getIssueByTitle(title));
+        return "issue-search"; //название представления
     }
 
     @GetMapping("/issue/{id}")

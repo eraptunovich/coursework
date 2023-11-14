@@ -43,7 +43,7 @@
 <body class="bg-light">
     <div class="container mt-5">
         <!-- Поиск по названию задачи -->
-        <form class="form-inline mb-4">
+        <form class="form-inline mb-4" action="/search" method="get" id="searchForm">
                     <div class="input-group mx-auto">
                         <input type="text" class="form-control" id="title" name="title" placeholder="Поиск по названию задачи">
                         <div class="input-group-append">
@@ -51,6 +51,16 @@
                         </div>
                     </div>
         </form>
+
+        <script>
+                    document.getElementById('searchForm').addEventListener('submit', function(event) {
+                        // Получить значение из поля ввода title
+                        var titleValue = document.getElementById('title').value;
+
+                        // Обновить action с учетом значения title
+                        this.action = "/search/" + encodeURIComponent(titleValue);
+                    });
+        </script>
 
         <hr>
 
@@ -96,36 +106,36 @@
         </div>
 
         <!-- Карусель для отображения задач -->
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <#list issues as issue>
-                        <div class="carousel-item <#if issue_index == 0> active </#if>">
-                            <div class="cards-wrapper">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <#list issues as issue>
+                                <div class="carousel-item <#if issue_index == 0> active </#if>">
+                                    <div class="cards-wrapper">
 
-                                <div class="card">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${issue.title?if_exists}</h5>
-                                        <p class="card-text">${issue.description?if_exists}</p>
-                                        <a href="/issue/${issue.issueId}" class="btn btn-primary">Подробнее</a>
+                                        <div class="card">
+                                            <img src="/images/pngwing.com (35).png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${issue.title?if_exists}</h5>
+                                                <p class="card-text">${issue.description?if_exists}</p>
+                                                <a href="/issue/${issue.issueId}" class="btn btn-primary">Подробнее</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </#list>
+
+
                             </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
-                    </#list>
-
-
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-    </div>
+                 </div>
 
     <!-- Подключение Bootstrap JavaScript (необходимо для некоторых компонентов) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
