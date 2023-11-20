@@ -67,7 +67,7 @@
         <!-- Форма создания задачи -->
         <div class="text-center">
             <h3>Создать задачу</h3>
-            <form action="/issue/create" method="post" accept-charset="UTF-8">
+            <form action="/issue/create" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="issueTitle">Название задачи</label>
                     <input type="text" class="form-control" id="issueTitle" name="title">
@@ -101,6 +101,20 @@
                     <input type="number" class="form-control" id="assignedTester" name="assignedTester">
                 </div>
 
+                <div class="form-group">
+                                    <label for="file1">Первая фотография</label>
+                                    <input type="file" class="form-control" id="file1" name="file1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="file2">Вторая фотография</label>
+                                    <input type="file" class="form-control" id="file2" name="file2">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="file3">Третья фотография</label>
+                                    <input type="file" class="form-control" id="file3" name="file3">
+                                </div>
                 <button type="submit" class="btn btn-success btn-block">Создать задачу</button>
             </form>
         </div>
@@ -113,11 +127,12 @@
                                     <div class="cards-wrapper">
 
                                         <div class="card">
-                                            <img src="/images/pngwing.com (35).png" class="card-img-top" alt="...">
+
                                             <div class="card-body">
-                                                <h5 class="card-title">${issue.title?if_exists}</h5>
-                                                <p class="card-text">${issue.description?if_exists}</p>
-                                                <a href="/issue/${issue.issueId}" class="btn btn-primary">Подробнее</a>
+                                                <h5 class="card-title">${issue.title}</h5>
+                                                <p class="card-text">${issue.description}</p>
+                                                <p>${issue.issueId}</p>
+                                                <a th:href="@{/issue/${(issue.issueId}}" class="btn btn-primary">Подробнее</a>
                                             </div>
                                         </div>
                                     </div>

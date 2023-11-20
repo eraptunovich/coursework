@@ -26,7 +26,7 @@ import java.util.List;
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "IssueID")
+    @Column(name = "issueid")
     private Long issueId;
 
     @Column(name = "Title")
@@ -60,15 +60,24 @@ public class Issue {
     @Column(name = "Assignedtester")
     private Integer assignedTester;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "issue")
     private List<IssueAttachments> attachments = new ArrayList<>();
+
+    @Column(name = "previewimageid")
     private Long previewImageId;
 
     @PrePersist
     private void init(){
+
         createdDate = LocalDateTime.now();
     }
+
+    public void addImageToIssue(IssueAttachments image){
+        image.setIssue(this);
+        attachments.add(image);
+    }
+
     public Issue() {
     }
 

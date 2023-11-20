@@ -29,20 +29,43 @@ public class IssueService {
         IssueAttachments img2;
         IssueAttachments img3;
         if(f1.getSize()!=0){
+            System.out.println(f1.getSize());
             img1 = toImageEntity(f1);
+            img1.setPreviewImage(true);
+            issue.addImageToIssue(img1);
         }
-        log.info("Saving new issue {}", issue);
+        if(f2.getSize()!=0){
+            img2 = toImageEntity(f2);
+            img2.setPreviewImage(true);
+            issue.addImageToIssue(img2);
+        }
+        if(f3.getSize()!=0){
+            img3 = toImageEntity(f3);
+            img3.setPreviewImage(true);
+            issue.addImageToIssue(img3);
+        }
+        log.info("Saving new issue. Title: {}, Description: {}", issue.getTitle(), issue.getDescription());
+        Issue issueFromDb = issueRepository.save(issue);
+        issueFromDb.setPreviewImageId(issueFromDb.getAttachments().get(0).getAttachmentId());
         issueRepository.save(issue);
     }
 
-    private IssueAttachments toImageEntity(MultipartFile file) throws IOException {
-        IssueAttachments image = new IssueAttachments();
-        image.setFileName(file.getOriginalFilename()); // Используйте getOriginalFilename() для получения имени файла
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-        return image;
+    private IssueAttachments toImageEntity(MultipartFile file) {
+        try {
+            IssueAttachments image = new IssueAttachments();
+            image.setFileName(file.getOriginalFilename());
+            image.setContentType(file.getContentType());
+            image.setSize(file.getSize());
+            image.setBytes(file.getBytes());
+            return image;
+        } catch (IOException e) {
+            log.error("Error converting MultipartFile to IssueAttachments. File name: {}, Content type: {}, Size: {} bytes",
+                    file.getOriginalFilename(), file.getContentType(), file.getSize());
+            throw new RuntimeException("Error converting MultipartFile to IssueAttachments", e);
+        }
     }
+
+
 
 
     public void deleteIssue(Long id){

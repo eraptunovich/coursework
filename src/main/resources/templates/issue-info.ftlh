@@ -45,6 +45,11 @@
         <#else>
             Нет данных
         </#if><br>
+        <#list images as img>
+            <img src="/images/${img.attachmentId}">
+        </#list>
+
+
     <#else>
         <p>Issue not found or is null.</p>
     </#if>
