@@ -131,8 +131,9 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">${issue.title}</h5>
                                                 <p class="card-text">${issue.description}</p>
-                                                <p>${issue.issueId}</p>
-                                                <a th:href="@{/issue/${(issue.issueId}}" class="btn btn-primary">Подробнее</a>
+                                                <p><img src="/images/${issue.previewImageId}" height="60px"></p>
+
+                                                <a href="/issue/${issue.issueId?c}" class="btn btn-primary">Подробнее</a>
                                             </div>
                                         </div>
                                     </div>

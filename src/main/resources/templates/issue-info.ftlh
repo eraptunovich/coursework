@@ -46,7 +46,7 @@
             Нет данных
         </#if><br>
         <#list images as img>
-            <img src="/images/${img.attachmentId}">
+            <img src="/images/${img.attachmentId}" height="60px">
         </#list>
 
 
@@ -55,7 +55,7 @@
     </#if>
 
     <hr>
-    <form action="/issue/delete/${issue.issueId}" method="post">
+    <form action="/issue/delete/${issue.issueId?с}" method="post">
         <input type="submit" class="btn btn-danger" value="Удалить задачу"/>
     </form>
     <a href="/" class="btn btn-primary mt-3">Назад...</a>

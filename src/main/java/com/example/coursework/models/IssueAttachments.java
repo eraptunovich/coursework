@@ -27,6 +27,7 @@ public class IssueAttachments {
     @Column(name = "ispreviewimage")
     private boolean isPreviewImage;
     @Lob
+    @Column(name="bytes")
     private byte[] bytes;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
