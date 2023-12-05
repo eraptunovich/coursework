@@ -42,6 +42,16 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5">
+
+        <#if user.login??>
+            <h3>Имя пользователя: <i>${user.name}</i></h3>
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <input type="submit" value="Выйти"/>
+            </form>
+        <#else>
+            <a href="/login">Войти</a></h1>
+        </#if>
         <!-- Поиск по названию задачи -->
         <form class="form-inline mb-4" action="/search" method="get" id="searchForm">
                     <div class="input-group mx-auto">
@@ -64,6 +74,7 @@
 
         <hr>
 
+        <#if user.login??>
         <!-- Форма создания задачи -->
         <div class="text-center">
             <h3>Создать задачу</h3>
@@ -102,23 +113,24 @@
                 </div>
 
                 <div class="form-group">
-                                    <label for="file1">Первая фотография</label>
-                                    <input type="file" class="form-control" id="file1" name="file1">
-                                </div>
+                    <label for="file1">Первая фотография</label>
+                    <input type="file" class="form-control" id="file1" name="file1">
+                </div>
 
-                                <div class="form-group">
-                                    <label for="file2">Вторая фотография</label>
-                                    <input type="file" class="form-control" id="file2" name="file2">
-                                </div>
+                <div class="form-group">
+                    <label for="file2">Вторая фотография</label>
+                    <input type="file" class="form-control" id="file2" name="file2">
+                </div>
 
-                                <div class="form-group">
-                                    <label for="file3">Третья фотография</label>
-                                    <input type="file" class="form-control" id="file3" name="file3">
-                                </div>
+                <div class="form-group">
+                    <label for="file3">Третья фотография</label>
+                    <input type="file" class="form-control" id="file3" name="file3">
+                </div>
+                <input type="hidden" name="_csrf" value=${_csrf.token}>
                 <button type="submit" class="btn btn-success btn-block">Создать задачу</button>
             </form>
         </div>
-
+        </#if>
         <!-- Карусель для отображения задач -->
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
@@ -131,8 +143,8 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">${issue.title}</h5>
                                                 <p class="card-text">${issue.description}</p>
-                                                <p><img src="/images/${issue.previewImageId}" height="60px"></p>
 
+                                                <#if issue.previewImageId??><p><img src="/images/${issue.previewImageId}" height="60px"></p></#if>
                                                 <a href="/issue/${issue.issueId?c}" class="btn btn-primary">Подробнее</a>
                                             </div>
                                         </div>

@@ -26,6 +26,11 @@
 
     <#if issue??>
         <b>Название: </b>${issue.title?if_exists}<br>
+        <b>Инициатор: </b><#if issue.user.name??>
+                                      ${issue.user.name}
+                                  <#else>
+                                      Нет данных
+                                  </#if><br>
         <b>Описание: </b>${issue.description?if_exists}<br>
         <b>Категория: </b>${issue.categoryId?if_exists}<br>
         <b>Статус: </b>${issue.status?if_exists}<br>
@@ -55,7 +60,8 @@
     </#if>
 
     <hr>
-    <form action="/issue/delete/${issue.issueId?с}" method="post">
+    <form action="/issue/delete/${issue.issueId?c}" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <input type="submit" class="btn btn-danger" value="Удалить задачу"/>
     </form>
     <a href="/" class="btn btn-primary mt-3">Назад...</a>

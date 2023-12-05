@@ -22,28 +22,13 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfiguration {
 
-//    private DataSource dataSource;
-//
-//    @Autowired
-//    public SecurityConfiguration(DataSource dataSource) { this.dataSource = dataSource; }
-
-
-
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-//        userDetailsManager.setUsersByUsernameQuery("SELECT login, password, active FROM users WHERE login=?");
-//        userDetailsManager.setAuthoritiesByUsernameQuery("SELECT login, role FROM userroles WHERE login=?");
-//        return userDetailsManager;
-//    }
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        //.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/admin/").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/programmer/").hasAuthority("ROLE_PROGRAMMER")
                         .requestMatchers("/registration").permitAll()
@@ -58,6 +43,8 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

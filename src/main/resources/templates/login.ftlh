@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>BUYSELL</title>
+    <title>BUGTRAKER</title>
     <!-- Add Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container mt-5">
-        <h1 class="text-center">BUYSELL</h1>
+        <h1 class="text-center">BUGTRAKER</h1>
         <hr>
 
         <div class="row justify-content-center">

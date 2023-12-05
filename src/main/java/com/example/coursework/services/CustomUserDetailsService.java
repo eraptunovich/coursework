@@ -28,12 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("No user found with login");
         }
-        Set<Role> roles = user.getRole();
+        //Set<Role> roles = user.getRole();
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User.builder()
                         .username(user.getLogin())
                         .password(user.getPassword())
-                        .roles("ROLE_PROGRAMMER")
+                        .roles("PROGRAMMER")
                         .build();
 
         return userDetails;

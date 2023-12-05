@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,10 +22,9 @@ public class IssueController {
 
 
     @GetMapping("/") //по данному гет-запросу будет вызываться данная функция
-    public String issues(Model model){
-        List<Issue> i = issueService.listIssues();
-        System.out.println(i.get(0).getIssueId());
-        model.addAttribute("issues", i);
+    public String issues(Model model, Principal principal){
+        model.addAttribute("issues", issueService.listIssues());
+        model.addAttribute("user", issueService.getUserByPrincipal(principal));
         return "issues"; //название представления
     }
 
@@ -39,6 +39,7 @@ public class IssueController {
 
         Issue issue = issueService.getIssueById(id);
         model.addAttribute("issue", issue);
+        System.out.println(issue.getAttachments());
         model.addAttribute("images", issue.getAttachments());
         return "issue-info";
     }
@@ -46,17 +47,18 @@ public class IssueController {
     @PostMapping("/issue/create")
     public String createIssue(@RequestParam("file1")  MultipartFile file1,
                               @RequestParam("file2") MultipartFile file2,
-                              @RequestParam("file3") MultipartFile file3, Issue issue) throws IOException {
+                              @RequestParam("file3") MultipartFile file3,
+                              Issue issue,
+                              Principal principal) throws IOException {
 
-        issueService.saveIssue(issue, file1, file2, file3);
+        issueService.saveIssue(principal, issue, file1, file2, file3);
         return "redirect:/";
     }
 
     @PostMapping("/issue/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteIssue(@PathVariable Long id) {
         issueService.deleteIssue(id);
         return "redirect:/";
     }
-
 
 }

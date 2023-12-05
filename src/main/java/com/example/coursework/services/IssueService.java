@@ -2,7 +2,9 @@ package com.example.coursework.services;
 
 import com.example.coursework.models.Issue;
 import com.example.coursework.models.IssueAttachments;
+import com.example.coursework.models.User;
 import com.example.coursework.repositories.IssueRepository;
+import com.example.coursework.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -17,14 +20,15 @@ import java.util.List;
 @Slf4j
 public class IssueService {
     private final IssueRepository issueRepository;
-
+    private final UserRepository userRepository;
 
     public List<Issue> listIssues() {
         return issueRepository.findAll();
     }
 
 
-    public void saveIssue(Issue issue, MultipartFile f1, MultipartFile f2, MultipartFile f3) throws IOException {
+    public void saveIssue(Principal principal, Issue issue, MultipartFile f1, MultipartFile f2, MultipartFile f3) throws IOException {
+        issue.setUser(getUserByPrincipal(principal));
         IssueAttachments img1;
         IssueAttachments img2;
         IssueAttachments img3;
@@ -46,8 +50,15 @@ public class IssueService {
         }
         log.info("Saving new issue. Title: {}, Description: {}", issue.getTitle(), issue.getDescription());
         Issue issueFromDb = issueRepository.save(issue);
-        issueFromDb.setPreviewImageId(issueFromDb.getAttachments().get(0).getAttachmentId());
+        if(!issueFromDb.getAttachments().isEmpty()) issueFromDb.setPreviewImageId(issueFromDb.getAttachments().get(0).getAttachmentId());
         issueRepository.save(issue);
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null){
+            return new User();
+        }
+        return userRepository.findByLogin(principal.getName());
     }
 
     private IssueAttachments toImageEntity(MultipartFile file) {

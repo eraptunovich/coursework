@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -41,10 +42,10 @@ public class Issue {
     @Column(name="Productversion")
     private String productVersion;
 
-    @Column(name = "Priority")
+    @Column(name = "priority")
     private String priority;
 
-    @Column(name = "Status")
+    @Column(name = "status")
     private String status;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="createddate")
@@ -66,6 +67,10 @@ public class Issue {
 
     @Column(name = "previewimageid")
     private Long previewImageId;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
 
     @PrePersist
     private void init(){
