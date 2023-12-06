@@ -2,10 +2,14 @@ package com.example.coursework.models.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Role implements GrantedAuthority {
-    ROLE_TESTER,
-    ROLE_PROGRAMMER,
-    ROLE_ADMIN;
+    TESTER,
+    PROGRAMMER,
+    ADMIN;
 
     @Override
     public String getAuthority() {
@@ -16,4 +20,5 @@ public enum Role implements GrantedAuthority {
     public String toString() {
         return name();
     }
+
 }

@@ -23,8 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,8 +62,15 @@ public class User implements UserDetails {
             mappedBy = "user")
     private List<Issue> issues = new ArrayList<>();
 
+    public List<Issue> getIssues(){
+        return issues;
+    }
     public User() {
 
+    }
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
     }
 
     @PrePersist

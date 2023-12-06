@@ -26,11 +26,17 @@
 
     <#if issue??>
         <b>Название: </b>${issue.title?if_exists}<br>
-        <b>Инициатор: </b><#if issue.user.name??>
-                                      ${issue.user.name}
-                                  <#else>
-                                      Нет данных
-                                  </#if><br>
+        <b>Инициатор: </b>
+
+        <#if issue.user.name??>
+              ${issue.user.name}
+              <a href="/user/${issue.user.userId?if_exists?c}" class="btn btn-primary">Подробнее</a>
+      <#else>
+              Нет данных
+      </#if>
+
+      <br>
+
         <b>Описание: </b>${issue.description?if_exists}<br>
         <b>Категория: </b>${issue.categoryId?if_exists}<br>
         <b>Статус: </b>${issue.status?if_exists}<br>
@@ -51,7 +57,7 @@
             Нет данных
         </#if><br>
         <#list images as img>
-            <img src="/images/${img.attachmentId}" height="60px">
+            <img src="/images/${img.attachmentId?c}" height="60px">
         </#list>
 
 
