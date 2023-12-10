@@ -26,7 +26,6 @@ public class IssueService {
         return issueRepository.findAll();
     }
 
-
     public void saveIssue(Principal principal, Issue issue, MultipartFile f1, MultipartFile f2, MultipartFile f3) throws IOException {
         issue.setUser(getUserByPrincipal(principal));
         IssueAttachments img1;

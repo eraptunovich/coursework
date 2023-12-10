@@ -43,6 +43,9 @@
                 </#list>
             </tbody>
         </table>
+
+        <a href="/category/create" class="btn btn-primary mt-3">Добавить категорию</a>
+
         <#if users?size == 0>
             <h3>Пользователей нет</h3>
         </#if>

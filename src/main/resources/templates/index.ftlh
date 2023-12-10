@@ -596,7 +596,7 @@
       <div class="navbar-brand">
         <span class="navbar-logo">
 					<a href="https://mobiri.se">
-						<img src="assets/images/photo-1617157382389-771cf2691904.jpeg" style="height: 3rem;">
+						<img src="assets/images/icon.jpg" style="height: 3rem;">
 					</a>
 				</span>
 				<span class="navbar-caption-wrap">
@@ -625,7 +625,7 @@
               aria-expanded="false">Задачи</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link text-black display-4" href="#">Профиль</a>
+            <a class="nav-link link text-black display-4" href="/profile/${user.userId}">Профиль</a>
           </li>
         </ul>
         <div class="navbar-buttons mbr-section-btn">

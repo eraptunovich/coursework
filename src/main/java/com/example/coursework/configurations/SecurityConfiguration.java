@@ -37,8 +37,7 @@ public class SecurityConfiguration {
                         auth -> auth
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                                 .requestMatchers("/login", "/registration").permitAll()
-                                .requestMatchers("/").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/").hasAuthority("PROGRAMMER")
+                                .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
@@ -49,18 +48,11 @@ public class SecurityConfiguration {
                 .logout(logout -> logout.logoutUrl("/logout").permitAll());
 
         return http.build();
-
     }
-
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-
 }
 
 

@@ -2,173 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>BUGTRAKER</title>
-    <!-- Подключение Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     <style>
-        .cards-wrapper {
-          display: flex;
-          justify-content: center;
+        .card-nav {
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            margin: 0.25rem;
         }
-        .card img {
-          max-width: 100%;
-          max-height: 100%;
+
+        .card-nav .card-body {
+            padding: 0.75rem;
         }
-        .card {
-          margin: 0 0.5em;
-          box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-          border: none;
-          border-radius: 0;
-          width: 600px;
+
+        .card-nav .nav-link {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
         }
-        .carousel-inner {
-          padding: 1em;
-        }
-        .carousel-control-prev,
-        .carousel-control-next {
-          background-color: #e1e1e1;
-          width: 5vh;
-          height: 5vh;
-          border-radius: 50%;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-        @media (min-width: 768px) {
-          .card img {
-            height: 11em;
-          }
+
+        .card-nav .nav-link:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
+<body>
 
-        <#if user.login??>
-            <h3>Имя пользователя: <i>${user.name}</i></h3>
-            <form action="/logout" method="post">
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <input type="submit" value="Выйти"/>
-            </form>
-        <#else>
-            <a href="/login">Войти</a></h1>
-        </#if>
-        <!-- Поиск по названию задачи -->
-        <form class="form-inline mb-4" action="/search" method="get" id="searchForm">
-                    <div class="input-group mx-auto">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Поиск по названию задачи">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary">Поиск</button>
-                        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">BUGTRAKER</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <div class="card card-nav">
+                    <div class="card-body">
+                        <a class="nav-link" href="/create-task">Создать задачу</a>
                     </div>
-        </form>
-
-        <script>
-                    document.getElementById('searchForm').addEventListener('submit', function(event) {
-                        // Получить значение из поля ввода title
-                        var titleValue = document.getElementById('title').value;
-
-                        // Обновить action с учетом значения title
-                        this.action = "/search/" + encodeURIComponent(titleValue);
-                    });
-        </script>
-
-        <hr>
-
-        <#if user.login??>
-        <!-- Форма создания задачи -->
-        <div class="text-center">
-            <h3>Создать задачу</h3>
-            <form action="/issue/create" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="issueTitle">Название задачи</label>
-                    <input type="text" class="form-control" id="issueTitle" name="title">
                 </div>
-                <div class="form-group">
-                    <label for="description">Описание задачи</label>
-                    <input type="text" class="form-control" id="description" name="description">
+            </li>
+            <li class="nav-item">
+                <div class="card card-nav">
+                    <div class="card-body">
+                        <a class="nav-link" href="/profile">Профиль</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="categoryId">Категория</label>
-                    <input type="text" class="form-control" id="categoryId" name="categoryId">
+            </li>
+            <li class="nav-item">
+                <div class="card card-nav">
+                    <div class="card-body">
+                        <a class="nav-link" href="/logout">Выйти из профиля</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="productVersion">Версия Продукта</label>
-                    <input type="text" class="form-control" id="productVersion" name="productVersion">
-                </div>
-                <div class="form-group">
-                    <label for="priority">Приоритет</label>
-                    <input type="text" class="form-control" id="priority" name="priority">
-                </div>
-                <div class="form-group">
-                    <label for="deadlineDate">Дедлайн</label>
-                    <input type="date" class="form-control" id="deadlineDate" name="deadlineDate">
-                </div>
-                <div class="form-group">
-                    <label for="assignedDeveloper">Назначить разработчика</label>
-                    <input type="number" class="form-control" id="assignedDeveloper" name="assignedDeveloper">
-                </div>
-                <div class="form-group">
-                    <label for="assignedTester">Назначить тестировщика</label>
-                    <input type="number" class="form-control" id="assignedTester" name="assignedTester">
-                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-                <div class="form-group">
-                    <label for="file1">Первая фотография</label>
-                    <input type="file" class="form-control" id="file1" name="file1">
-                </div>
+<!-- Остальной контент вашей страницы будет идти здесь -->
 
-                <div class="form-group">
-                    <label for="file2">Вторая фотография</label>
-                    <input type="file" class="form-control" id="file2" name="file2">
-                </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-aZR5MPzzA1CjoJ90J3TU5fbhM4+oyg4j60uLeE2D1moGwRCD8WiE2L6F2I3IyZl"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
-                <div class="form-group">
-                    <label for="file3">Третья фотография</label>
-                    <input type="file" class="form-control" id="file3" name="file3">
-                </div>
-                <input type="hidden" name="_csrf" value=${_csrf.token}>
-                <button type="submit" class="btn btn-success btn-block">Создать задачу</button>
-            </form>
-        </div>
-        </#if>
-        <!-- Карусель для отображения задач -->
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <#list issues as issue>
-                                <div class="carousel-item <#if issue_index == 0> active </#if>">
-                                    <div class="cards-wrapper">
-
-                                        <div class="card">
-
-                                            <div class="card-body">
-                                                <h5 class="card-title">${issue.title}</h5>
-                                                <p class="card-text">${issue.description}</p>
-
-                                                <#if issue.previewImageId??><p><img src="/images/${issue.previewImageId}" height="60px"></p></#if>
-                                                <a href="/issue/${issue.issueId?c}" class="btn btn-primary">Подробнее</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </#list>
-
-
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                 </div>
-
-    <!-- Подключение Bootstrap JavaScript (необходимо для некоторых компонентов) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 

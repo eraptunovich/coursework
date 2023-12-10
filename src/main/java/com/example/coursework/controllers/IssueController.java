@@ -1,7 +1,9 @@
 package com.example.coursework.controllers;
 
 import com.example.coursework.models.Issue;
+import com.example.coursework.services.CategoryService;
 import com.example.coursework.services.IssueService;
+import com.example.coursework.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,9 +25,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IssueController {
     private final IssueService issueService;
+    private final UserService userService;
 
+    private final CategoryService categoryService;
     @GetMapping("/index") //по данному гет-запросу будет вызываться данная функция
-    public String index(){
+    public String index(Model model, Principal principal){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication.isAuthenticated()) {
@@ -42,6 +46,8 @@ public class IssueController {
             }
         }
 
+        model.addAttribute("user", issueService.getUserByPrincipal(principal));
+        System.out.println(issueService.getUserByPrincipal(principal));
         return "index"; //название представления
     }
 
@@ -49,13 +55,15 @@ public class IssueController {
     public String issues(Model model, Principal principal){
         model.addAttribute("issues", issueService.listIssues());
         model.addAttribute("user", issueService.getUserByPrincipal(principal));
-        return "issues"; //название представления
+        model.addAttribute("users", userService.list());
+        model.addAttribute("categories", categoryService.listCategories());
+        System.out.println(categoryService.listCategories());
+        return "issue-create"; //название представления
     }
 
     @GetMapping("/issues") //по данному гет-запросу будет вызываться данная функция
     public String issues(Model model){
         model.addAttribute("issues", issueService.listIssues());
-
         return "issues"; //название представления
     }
     @GetMapping("/search/{id}")
